@@ -16,7 +16,9 @@
  */
 
 class Hook{
-	static private $events = array();
+	static private $events 		= array();
+	static private $runMap 		= array();
+	static public $logAllow		= false;
 	static public function get($event=false){
 		if(!$event){
 			return self::$events;
@@ -66,52 +68,34 @@ class Hook{
 			self::$events[$event][] = $eventsMatch[$i];
 		}
 	}
-	
 	//数据处理;只支持传入一个参数
-	static public function filter($event,$param) {
-		$events = self::$events;
-		if(!is_string($event)) return false;
-		if(!isset($events[$event])) return $param;
-		if(count(self::$events[$event]) == 0) return $param;
-
-		$result  = $param;
-		$actions = self::$events[$event];
-		$actionsCount = count($actions);
-		for ($i=0; $i < $actionsCount; $i++) {
-			$action = $actions[$i];
-			if($action['once'] && $action['times'] > 1) continue;
-			
-			self::$events[$event][$i]['times'] = $action['times'] + 1;
-			$temp = ActionApply($action['action'],array($result));
-			Hook::trigger($action['action']);
-			
-			// 类型相同才替换;
-			// pr($action['action'],gettype($result),gettype($temp));
-			if(gettype($temp) == gettype($result)){$result = $temp;}
-		}
-		return $result;
+	static public function filter($event,$param){
+		return self::applyEvent($event,'filter',$param);	
+	}	
+	static public function trigger($event) {
+		$args = func_get_args();array_shift($args);	
+		return self::applyEvent($event,'trigger',$args);
 	}
 	
-	static public function trigger($event) {
-		static $_logHook = 100;
-		if($_logHook === 100){$_logHook = defined("GLOBAL_LOG_HOOK") && GLOBAL_LOG_HOOK;}
-		if(!is_string($event)) return false;
-		if(!isset(self::$events[$event])) return false;
-		if(count(self::$events[$event]) == 0) return false;
-		
-		$result  = false;
-		$actions = self::$events[$event];
-		$actionsCount = count($actions);
-		$args = func_get_args();
-		array_shift($args);
-		for ($i=0; $i < $actionsCount; $i++) {
-			$action = $actions[$i];
-			$actionStr = self::getCallerStr($action['action']);
-			if($action['once'] && $action['times'] > 1) continue;
-			if($_logHook){write_log($event.'==>start: '.$actionStr,'hook-trigger');}
+	static private function applyEvent($event,$type='filter',$param){
+		if(defined("GLOBAL_LOG_HOOK") && GLOBAL_LOG_HOOK){self::$logAllow = true;}
+		$result = ($type == 'filter') ? $param : false; // $type = filter|trigger;
+		if(!is_string($event)) return $result;
+		if(!isset(self::$events[$event])) return $result;
+		if(count(self::$events[$event]) == 0) return $result;
+		if(self::checkRunLoopStart($event)) return $result;
 
-			self::$events[$event][$i]['times'] = $action['times'] + 1;
+		$actions = &self::$events[$event];
+		$actionsCount = count($actions);
+		for($i=0; $i < $actionsCount; $i++){
+			$action = $actions[$i];
+			if($action['once'] && $action['times'] > 1) continue;
+			$actionStr = self::getCallerStr($action['action']);
+			self::log('[run  ] '.$event.'==>start: '.$actionStr.';'.$action['times']);
+			$args = ($type == 'filter') ? array($result) : $param;
+			
 			try{
+				$action['times']++;
 				$res = ActionApply($action['action'],$args);
 			}catch(Exception $e){
 				$error = '['.$actionStr.']: '.$e->getMessage();
@@ -119,16 +103,39 @@ class Hook{
 				if(!$res){throw new Exception($e->getMessage());}
 			}
 			if(is_string($action['action'])){Hook::trigger($action['action']);}
-			
-			if($_logHook){
-				write_log(get_caller_info(),'hook-trigger');
-				if($action['times'] == 200){//避免循环调用
-					write_log("Warning,Too many trigger on:".$event.'==>'.$actionStr,'warning');
-				}
+
+			if($type == 'filter'){
+				if(gettype($res) == gettype($result)){$result = $res;}
+			}else if($type == 'trigger'){
+				$result = is_null($res) ? $result:$res;
 			}
-			$result = is_null($res) ? $result:$res;
 		}
+		self::checkRunLoopStop($event);
 		return $result;
+	}
+		
+	// 检查死循环; 事件触发后,内部继续调用事件可能造成死循环; 不支持事件递归的情况;
+	static private function checkRunLoopStart($event){
+		// self::$logAllow = true;
+		self::log('[start] '.$event.';'.json_encode(self::$runMap));
+		if(in_array($event,self::$runMap)){
+			self::log('======= [END] loop; '.$event);
+			return true;
+		}
+		// 递归深度限制,最多30层;
+		if(count(self::$runMap) > 30){
+			self::log('======= [END] too many; '.$event);
+			return true;
+		}
+		self::$runMap[] = $event;
+	}
+	static private function checkRunLoopStop($event){
+		self::log('[end  ] '.$event);
+		array_pop(self::$runMap);
+	}
+	static private function log($log=''){
+		if(!self::$logAllow){return;}
+		write_log($log,'hook-filter');
 	}
 	
 	static public function getCallerStr($action){

@@ -45,7 +45,7 @@ $config['settings'] = array(
 	'storeFileNumberMax'	=> 0,			// 外链分享转存文件个数上限, 0不限制
 	'shareLinkSizeMax'		=> 0,			// 分享文件/文件夹最大大小限制; 0不限制; 单位GB(float)
 	'unzipFileSizeMax'  	=> 0,			// 文件解压压缩包大小限制; 0-不限制; 单位GB(float)
-	'zipFileSizeMax'  		=> 0,			// 文件(夹)压缩大小限制;   0-不限制; 单位GB(float)
+	'zipFileSizeMax'  		=> 24,			// 文件(夹)压缩大小限制;   0-不限制; 单位GB(float)
 	'groupCompany'			=> 0,			// 二级部门为子公司,独立部门;
 	'shareLinkExpireTime'	=> 0,			// 外链分享过期时间，单位天（n天后过期）
 	'userLoginLimit'		=> 5,			// 同一账号限制同时登录设备数;0=不限制;guest/admin不限制
@@ -274,6 +274,7 @@ $config['settingSystemDefault'] = array(
 	'groupSpaceLimit'	=> '0',			// 部门网盘层级限制; 超过部门的层级不显示部门网盘
 	'groupSpaceLimitLevel'=> '5',		// 部门网盘层级,指定层级,默认超过5层不显示部门网盘; >=1;
 	'pathSafeSpaceEnable' => '1',		// 1|0, 全局开启关闭[私密保险箱]
+	'functionLightApp'	=> '0',			// 轻应用功能开关; 0关闭,1开启;
 	
 	// 分享相关设置;
 	'shareToMeAllowTree'=> '1',			// 分享给我的内容支持按部门组织架构或用户进行分类
@@ -290,7 +291,7 @@ $config['settingSystemDefault'] = array(
 	'desktopAppDisable'				=> '',		// 桌面默认快捷方式入口隐藏项;
 	
 	'treeOpen'			=> 'my,myFav,myGroup,rootGroup,recentDoc,fileType,fileTag,driver',//树目录开启功能;
-	'groupListChild'	=> '1',//罗列子部门; 0=不罗列;1=全部罗列;2=仅树目录罗列;
+	'groupListChild'	=> '2',//罗列子部门; 0=不罗列;1=全部罗列;2=仅树目录罗列;
 	'groupRootListChild'=> '1',
 	'wallpageDesktop'	=> "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
 	'wallpageLogin'		=> "2,3,6,8,9,11,12,16,17",

@@ -17,10 +17,6 @@ class explorerListPassword extends Controller{
 	}
 	// 权限检测
 	public function authCheck($pathInfo,$action){
-		if($pathInfo['shareID'] && $pathInfo['sourceID']){
-			$pathInfo = Model("Source")->pathInfo($pathInfo['sourceID']);
-		}	
-	
 		if(!$this->checkAuthNeed($pathInfo)){return;} // 拥有编辑以上权限则忽略;
 		$passInfo = $this->checkAllowPassword($pathInfo);
 		if($passInfo){// 当前文件,或上层需要密码;

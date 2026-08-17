@@ -6,6 +6,7 @@
 class KodLog{
 	public static $logLast = array();
 	public static $logTimeShowLast = array();
+	public static $checkClientAbort = true;
 	public static function replace($staus=true){self::log('',$staus ? 'replace':'reset');}
 	public static function enable ($staus=true){self::log('',$staus ? 'enable':'disable');}
 	public static function log($log,$replaceType=''){
@@ -15,7 +16,6 @@ class KodLog{
 			self::$logTimeShowLast = array();
 			if($replaceType == 'replaceGet'){return $_replace;}
 			if($replaceType == 'enableGet' ){return $_enableLog;}
-			
 			if($replaceType == 'disable'){$_enableLog = false;return;}
 			if($replaceType == 'enable' ){$_enableLog = true;return;}
 			if(!$_enableLog){return;}
@@ -30,7 +30,7 @@ class KodLog{
 		if(!$_enableLog){return;}
 		
 		self::$logLast = array('log'=>$log,'replace'=>$_replace,'time'=>time());
-		check_abort_now();
+		if(self::$checkClientAbort){check_abort_now();}
 		echoLog($log,$_replace);
 	}
 	public static function logKeep($timeout=5){

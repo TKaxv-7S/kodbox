@@ -191,7 +191,7 @@ function get_charset(&$str) {
 	if ($charset == 'cp936'){
 		// 有交叉，部分文件无法识别
 		$is8559 = charset_check($str,'ISO-8859-4');
-		$isGbk  = charset_check($str,'gbk');
+		$isGbk  = charset_check($str,'gbk') || checkGBK($str);
 		$isBig5 = charset_check($str,'big5');
 		
 		if($isBig5){$charset = 'big5';}

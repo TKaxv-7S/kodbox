@@ -97,15 +97,16 @@ class explorerRecycleDriver extends Controller{
 	}
 	
 	// 彻底删除;
-	public function remove($sourceArr){
+	public function remove($pathArr){
 		$list = $this->listData();
 		$listNew = $list;
 		foreach ($list as $toPath => $fromPath){
 			// 删除所有, 或者当前在待删除列表中则删除该项;
 			$beforePath = rtrim($fromPath,'/').'/'.get_path_this($toPath);
-			if(!$sourceArr || 
-				in_array($beforePath,$sourceArr) || 
-				in_array(trim($beforePath,'/').'/',$sourceArr)
+			if(!$pathArr || 
+				in_array($beforePath,$pathArr) || 
+				in_array(trim($beforePath,'/').'/',$pathArr) || 
+				$this->isSameShare($toPath,$fromPath,$pathArr)
 			){
 				IO::remove($toPath,false);
 				unset($listNew[$toPath]);
@@ -115,9 +116,22 @@ class explorerRecycleDriver extends Controller{
 			$this->resetList($listNew);
 		}
 	}
+	// 判断是否为同一个协作：协作中fromPath为上上级，项目中为平级，故不检查是否为父目录关系
+	private function isSameShare($toPath,$fromPath,$pathArr){
+		if (!in_array($toPath, $pathArr)) return false;
+		$sameShare = false;
+		$toParse = KodIO::parse($toPath);
+		if ($toParse['type'] == KodIO::KOD_SHARE_ITEM) {
+			$fromParse = KodIO::parse($fromPath);
+			if ($fromParse['type'] == KodIO::KOD_SHARE_ITEM && $toParse['id'] == $fromParse['id']) {
+				$sameShare = true;
+			}
+		}
+		return $sameShare;
+	}
 
 	// 还原
-	public function restore($sourceArr){
+	public function restore($pathArr){
 		$list = $this->listData();
 		$listNew = $list;$result  = array();
 		foreach($list as $thePath => $beforePath){

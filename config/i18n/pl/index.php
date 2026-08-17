@@ -2604,7 +2604,7 @@ return array(
     "explorer.secret.tips"           => "Uprawnienia są kontrolowane przez poziom tajny, a uprawnienia na poziomie tajnym są wyższe niż uprawnienia do dokumentu",
     "explorer.secret.tips1"          => "Zawartość dysku sieciowego działu może być ustawiona wyłącznie przez wyżej wymienionych użytkowników (zaleca się, aby byli właścicielami folderu)",
     "explorer.secret.tips2"          => "Cała zawartość w dolnej warstwie folderu z poziomem poufności jest ustawiona, a to uprawnienie jest najwyższym uprawnieniem",
-    "explorer.secret.tips3"          => "Po ustawieniu uprawnienia na poziomie tajnym są wyższe niż uprawnienia na poziomie dokumentu (dokument jest również kontrolowany przez uprawnienie na poziomie tajnym, superadministrator systemu nie podlega temu ograniczeniu, a ustawiający poziom tajny nie podlega temu ograniczeniu)",
+    "explorer.secret.tips3"          => "Po ustawieniu poziomu uprawnień bezpieczeństwa są one wyższe od uprawnień dokumentu (właściciel dokumentu również podlega uprawnieniom poziomu uprawnień bezpieczeństwa, ale superadministrator systemu nie podlega temu ograniczeniu, podobnie jak osoba, która ustawił poziom uprawnień bezpieczeństwa).",
     "explorer.secret.tips4"          => "Uprawnienia na poziomie poufnym: można dodać w sekcji „Zarządzanie działami i członkami — zarządzanie prawami do dokumentów” i ustawić jako ukryte",
     "user.----"                      => "----",
     "user.displayHideFile"           => "Pokaż ukryte pliki",

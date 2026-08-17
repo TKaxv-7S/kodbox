@@ -2604,7 +2604,7 @@ return array(
     "explorer.secret.tips"           => "Los permisos están controlados por el nivel secreto, y los permisos del nivel secreto son más altos que los permisos del documento.",
     "explorer.secret.tips1"          => "Solo el contenido del disco de red del departamento puede ser configurado por los usuarios designados mencionados anteriormente (se recomienda ser el propietario de la carpeta)",
     "explorer.secret.tips2"          => "Se establece todo el contenido en la capa inferior de la carpeta con el nivel de confidencialidad, y esta autoridad es la autoridad más alta",
-    "explorer.secret.tips3"          => "Después de la configuración, el permiso de nivel secreto es más alto que el permiso del documento (el documento también está controlado por el permiso de nivel secreto, el superadministrador del sistema no está sujeto a esta restricción y el establecedor de nivel secreto no está sujeto a esta restricción)",
+    "explorer.secret.tips3"          => "Tras la configuración, los permisos del nivel de seguridad son superiores a los permisos del documento (el propietario del documento también está sujeto a los permisos del nivel de seguridad, pero el superadministrador del sistema no está sujeto a esta restricción, y la persona que configuró el nivel de seguridad tampoco).",
     "explorer.secret.tips4"          => "Permisos de nivel confidencial: se pueden agregar en &quot;Administración de departamentos y miembros--Administración de derechos de documentos&quot; y establecerse como ocultos",
     "user.----"                      => "----",
     "user.displayHideFile"           => "Mostrar archivos ocultos",

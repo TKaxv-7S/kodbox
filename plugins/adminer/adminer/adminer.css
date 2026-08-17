@@ -23,6 +23,7 @@ body #menu #dbs{padding: 10px 0px 10px 10px;}
 body #menu #dbs select{position: relative;max-width: 190px;left: 0;}
 body #menu #tables{margin: 0 0 !important;padding: 5px 0;left: 10px;right: 10px;top: 150px;}
 body #menu #tables a{padding: 5px 10px;line-height: 16px;}
+body #menu #dbs select{max-width: 175px; padding-right: 20px;}
 
 body.js.menu-hide #menu{display: none;}
 body .toggle-menu{left:300px;}
@@ -864,3 +865,8 @@ pre, textarea{display: inline-block;}
 
 input[type=submit]{color:#fff;background-color: #1890ff;}
 input[type=submit]:hover{color:#fff;background-color: #2070e5;}
+
+input[name=db]{width: 170px;background-color: #456079;color: #fff;border: none;height: 23px;line-height: 23px;}
+input[name=db]:hover,
+input[name=db]:focus,
+input[name=db]:active{background-color: #31475f;border: none !important;box-shadow: none;}

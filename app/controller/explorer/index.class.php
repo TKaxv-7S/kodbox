@@ -89,6 +89,10 @@ class explorerIndex extends Controller{
 		if($this->config['settings']['disableDesktopHelp'] == 1){
 			unset($desktopApps['userHelp']);
 		}
+		if(Model('SystemOption')->get('functionLightApp') == '0'){ //是否启用轻应用 null/'0'/'1'
+			unset($desktopApps['appStore']);
+		}
+		
 		foreach ($desktopApps as $key => &$item) {
 			if($item['menuType'] == 'menu-default-open'){
 				$item['menuType'] = 'menu-default';
@@ -446,7 +450,7 @@ class explorerIndex extends Controller{
 	}
 	// 从回收站删除
 	public function recycleDelete(){		
-		$pathArr   = false;
+		$pathArr = false;
 		if( _get($this->in,'all') ){
 			$recycleList = Model('SourceRecycle')->listData();
 			foreach ($recycleList as $key => $sourceID) {
@@ -458,8 +462,8 @@ class explorerIndex extends Controller{
 			$this->taskCopyCheck($dataArr);
 			$pathArr = $this->parseSource($dataArr);
 		}
-		Model('SourceRecycle')->remove($pathArr);
-		Action('explorer.recycleDriver')->remove($pathArr);
+		Model('SourceRecycle')->remove(_get($pathArr,'sourceArr',false));
+		Action('explorer.recycleDriver')->remove(_get($pathArr,'pathArr',false));
 
 		// 清空回收站时,重新计算大小; 一小时内不再处理;
 		Model('Source')->targetSpaceUpdate(SourceModel::TYPE_USER,KodUser::id());
@@ -487,8 +491,8 @@ class explorerIndex extends Controller{
 			$pathArr = $this->parseSource($dataArr);
 		}
 
-		$fileListDriver = Action('explorer.recycleDriver')->restore($pathArr);
-		$fileListSource = Model('SourceRecycle')->restore($pathArr);
+		$fileListDriver = Action('explorer.recycleDriver')->restore(_get($pathArr,'pathArr',false));
+		$fileListSource = Model('SourceRecycle')->restore(_get($pathArr,'sourceArr',false));
 		
 		$fileList 	= array_merge($fileListDriver,$fileListSource);
 		$listTo 	= array();
@@ -500,14 +504,18 @@ class explorerIndex extends Controller{
 		show_json(LNG('explorer.success'),true,$fileList,array('listTo'=>$listTo)); 
 	}
 	private function parseSource($list){
-		$result = array();
+		$result = array(
+			'pathArr'	=> array(), 
+			'sourceArr' => array()
+		);
 		foreach ($list as $value) {
 			$parse = KodIO::parse($value['path']);
 			$thePath = $value['path'];// io路径;物理路径;协作分享路径处理保持不变;
 			if($parse['type'] == KodIO::KOD_SOURCE){
-				$thePath = IO::getPath($value['path']);
+				$result['sourceArr'][] = IO::getPath($value['path']);
+			} else {
+				$result['pathArr'][] = $thePath;
 			}
-			$result[] = $thePath;
 		}
 		return $result;
 	}
@@ -701,7 +709,7 @@ class explorerIndex extends Controller{
 	}
 	
 	public function clearCache(){
-		$maxTime = 3600*24;
+		$maxTime = 3600*8;
 		$list = IO::listPath(TEMP_FILES);
 		$list = is_array($list) ? $list : array('fileList'=>array(),'folderList'=>array());
 		$list = array_merge($list['fileList'],$list['folderList']);
@@ -712,6 +720,14 @@ class explorerIndex extends Controller{
 			}else{
 				del_file($item['path']);
 			}
+		}
+		
+		// 自动清理  imagick-生成的临时文件(最后修改时间超过10分钟的文件)
+		$list = IO::listPath('/tmp/');
+		foreach($list['fileList'] as $item){
+			if(!startWith(strtolower($item['name']),'magick-')){continue;}
+			if(time() - $item['modifyTime'] < 60){continue;}
+			del_file($item['path']);
 		}
 	}
 	/**

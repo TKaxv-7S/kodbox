@@ -615,6 +615,11 @@ class explorerShare extends Controller{
 		$theItem['pathDisplay'] = ltrim(substr($item['pathDisplay'],strlen($rootPath)),'/');
 		$theItem['path'] = rtrim($path,'/').'/'.$theItem['pathDisplay'];
 		$theItem['pathDisplay'] = $name.'/'.$theItem['pathDisplay'];
+		
+		// 目录层级隐藏分享根目录以上内容;  分享目录上层文件夹需要密码的忽略;
+		if($item['parentLevel']){
+			$theItem['parentLevel'] = ',0,'.substr($item['parentLevel'],strlen($this->share['sourceInfo']['parentLevel']));
+		}
 
 		if(is_array($item['metaInfo'])){
 			$picker = 'user_sourceCover,folderPassword';

@@ -2604,7 +2604,7 @@ return array(
     "explorer.secret.tips"           => "權限受密級控制,密級權限高於文檔權限",
     "explorer.secret.tips1"          => "僅限部門網盤下內容,上述指定使用者才能設定密級(建議為資料夾擁有者)",
     "explorer.secret.tips2"          => "設定密級的文件夾下層所有內容,都以此權限為最高權限",
-    "explorer.secret.tips3"          => "設定後密級權限高於文檔權限(文檔擁也受密級權限控制,系統超級管理員不受該限制,密級設定者自己不受該限制)",
+    "explorer.secret.tips3"          => "設定後密級權限高於文件權限(文件擁有者也受密級權限控制,系統超級管理員不受該限制,密級設定者本身不受該限制)",
     "explorer.secret.tips4"          => "密級權限: 可以在\"部門與成員管理--文檔權限管理\"中增加,並設定為隱藏",
     "user.----"                      => "----",
     "user.displayHideFile"           => "顯示隱藏文件",

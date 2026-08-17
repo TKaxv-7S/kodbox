@@ -87,6 +87,12 @@ class explorerAutoPathParse extends Controller {
 		$sourceID = $match[2];
 		foreach($pathArr as $i=>$name){
 			$pathInfo = $this->parseSource($sourceID,$name);
+			$infoNow  = Model("Source")->sourceInfo($sourceID);
+			// 传入追加文件名多了一层自生文件名的情况兼容; qwen3.6-35B path可能重复追加文件名: {source:22}/文档 => {source:22}/
+			if(!$pathInfo && $sourceID && $infoNow && $infoNow['name'] == $name){ // 不存在,且传入
+				$pathInfo = $infoNow;
+			}
+			
 			if(!$pathInfo){ // 不存在时, 当前文档为文件时; 直接返回;  允许文件路径后续追加无效内容;
 				$itemInfo = Model("Source")->field("sourceID,name,isFolder")->where(array('sourceID'=>$sourceID,'isDelete'=>0))->find();
 				if($itemInfo && $itemInfo['isFolder'] == '0'){$pathInfo = $itemInfo;}

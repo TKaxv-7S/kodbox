@@ -2604,7 +2604,7 @@ return array(
     "explorer.secret.tips"           => "İzinler, gizli seviye tarafından kontrol edilir ve gizli seviye izinleri, belge izinlerinden daha yüksektir.",
     "explorer.secret.tips1"          => "Sadece bölüm ağ diskindeki içerik yukarıda belirtilen belirlenmiş kullanıcılar tarafından ayarlanabilir (klasör sahibi olmanız önerilir)",
     "explorer.secret.tips2"          => "Klasörün alt katmanındaki tüm içerikler ile gizlilik düzeyi ayarlanmıştır ve bu yetki en yüksek yetkilidir.",
-    "explorer.secret.tips3"          => "Ayarlamadan sonra, gizli düzey izni belge izninden daha yüksektir (belge ayrıca gizli düzey izni tarafından kontrol edilir, sistem süper yöneticisi bu kısıtlamaya tabi değildir ve gizli düzey ayarlayıcı bu kısıtlamaya tabi değildir)",
+    "explorer.secret.tips3"          => "Ayarlar yapıldıktan sonra, güvenlik düzeyi izinleri belge izinlerinden daha yüksek olur (belge sahibi de güvenlik düzeyi izinlerine tabidir, ancak sistem süper yöneticisi bu kısıtlamaya tabi değildir ve güvenlik düzeyini ayarlayan kişi de bu kısıtlamaya tabi değildir).",
     "explorer.secret.tips4"          => "Gizli düzey izinler: &quot;Departman ve Üye Yönetimi--Belge Hakları Yönetimi&quot;ne eklenebilir ve gizli olarak ayarlanabilir",
     "user.----"                      => "----",
     "user.displayHideFile"           => "Gizli dosyaları göster",

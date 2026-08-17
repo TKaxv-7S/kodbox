@@ -2604,7 +2604,7 @@ return array(
     "explorer.secret.tips"           => "The permissions are controlled by the secret level, and the secret level permissions are higher than the document permissions",
     "explorer.secret.tips1"          => "Only the content in the department network disk can be set by the above-mentioned designated users (it is recommended to be the folder owner)",
     "explorer.secret.tips2"          => "All content in the lower layer of the folder with the confidentiality level is set, and this authority is the highest authority",
-    "explorer.secret.tips3"          => "After setting, the secret level permission is higher than the document permission (the document is also controlled by the secret level permission, the system super administrator is not subject to this restriction, and the secret level setter is not subject to this restriction)",
+    "explorer.secret.tips3"          => "After setting, the security level permissions are higher than document permissions (the document owner is also subject to security level permissions, but the system super administrator is not subject to this restriction, and the person who set the security level is not subject to this restriction).",
     "explorer.secret.tips4"          => "Confidential level permissions: can be added in \"Department and Member Management--Document Rights Management\" and set as hidden",
     "user.----"                      => "----",
     "user.displayHideFile"           => "Show hidden files",

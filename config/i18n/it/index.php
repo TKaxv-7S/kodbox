@@ -2604,7 +2604,7 @@ return array(
     "explorer.secret.tips"           => "Le autorizzazioni sono controllate dal livello di segreto e le autorizzazioni a livello di segreto sono superiori alle autorizzazioni del documento",
     "explorer.secret.tips1"          => "Solo il contenuto del disco di rete del dipartimento può essere impostato dagli utenti designati sopra menzionati (si consiglia di essere il proprietario della cartella)",
     "explorer.secret.tips2"          => "Viene impostato tutto il contenuto nel livello inferiore della cartella con il livello di riservatezza e questa autorità è l'autorità più alta",
-    "explorer.secret.tips3"          => "Dopo l'impostazione, l'autorizzazione a livello segreto è superiore all'autorizzazione del documento (anche il documento è controllato dall'autorizzazione a livello segreto, il super amministratore di sistema non è soggetto a questa restrizione e il setter del livello segreto non è soggetto a questa restrizione)",
+    "explorer.secret.tips3"          => "Dopo l'impostazione, i permessi del livello di sicurezza sono superiori ai permessi del documento (anche il proprietario del documento è soggetto ai permessi del livello di sicurezza, ma l'amministratore di sistema non è soggetto a questa restrizione, così come la persona che ha impostato il livello di sicurezza).",
     "explorer.secret.tips4"          => "Autorizzazioni a livello di riservatezza: possono essere aggiunte in &quot;Gestione reparto e membri--Gestione diritti documento&quot; e impostate come nascoste",
     "user.----"                      => "----",
     "user.displayHideFile"           => "Mostra file nascosti",

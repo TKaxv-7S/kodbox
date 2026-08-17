@@ -2604,7 +2604,7 @@ return array(
     "explorer.secret.tips"           => "Les autorisations sont contrôlées par le niveau de secret, et les autorisations de niveau secret sont supérieures aux autorisations de document",
     "explorer.secret.tips1"          => "Seul le contenu du disque réseau du département peut être défini par les utilisateurs désignés mentionnés ci-dessus (il est recommandé d'être le propriétaire du dossier)",
     "explorer.secret.tips2"          => "Tout le contenu de la couche inférieure du dossier avec le niveau de confidentialité est défini, et cette autorité est la plus haute autorité",
-    "explorer.secret.tips3"          => "Après le réglage, l'autorisation de niveau secret est supérieure à l'autorisation de document (le document est également contrôlé par l'autorisation de niveau secret, le super administrateur système n'est pas soumis à cette restriction et le créateur du niveau secret n'est pas soumis à cette restriction)",
+    "explorer.secret.tips3"          => "Après paramétrage, les autorisations de niveau de sécurité sont supérieures aux autorisations de document (le propriétaire du document est également soumis aux autorisations de niveau de sécurité, mais le super administrateur du système n'est pas soumis à cette restriction, et la personne qui a défini le niveau de sécurité n'est pas soumise à cette restriction).",
     "explorer.secret.tips4"          => "Autorisations de niveau confidentiel : peuvent être ajoutées dans &quot;Gestion des services et des membres - Gestion des droits sur les documents&quot; et définies comme masquées",
     "user.----"                      => "----",
     "user.displayHideFile"           => "Afficher les fichiers cachés",

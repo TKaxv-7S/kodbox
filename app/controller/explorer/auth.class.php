@@ -309,7 +309,11 @@ class explorerAuth extends Controller {
 		
 		//上层文件夹是否需要密码;
 		if($pathInfo && isset($pathInfo['sourceID'])){
-			$errorMsg = Action('explorer.listPassword')->authCheck($pathInfo,$action);
+			$pathInfoCheck = $pathInfo;
+			if($ioType == KodIO::KOD_SHARE_ITEM){
+				$pathInfoCheck = IO::infoAuth($path);
+			}
+			$errorMsg = Action('explorer.listPassword')->authCheck($pathInfoCheck,$action);
 			if($errorMsg){return $this->errorMsg($errorMsg,1102);}
 		}
 		
