@@ -71,6 +71,7 @@ class msgWarningPlugin extends PluginBase{
 	}
 	// 卸载插件——删除计划任务
 	public function onUninstall(){
+		KodUser::checkRoot();
 		$this->apiAct()->delTask();
 		Cache::remove($this->pluginName.'.webNtcList.'.date('Ymd'));
 		Cache::remove($this->pluginName.'.msgQueue');
@@ -114,6 +115,7 @@ class msgWarningPlugin extends PluginBase{
 	 * @return void
 	 */
     public function table(){
+		KodUser::checkRoot();
 		$tab = Input::get('tab', 'in', null, array('evnt','type','logs'));
 		$api = $this->loadLib($tab);
 		if (!$api) {show_json(LNG('common.illegalRequest'), false);}
@@ -125,6 +127,7 @@ class msgWarningPlugin extends PluginBase{
 	 * @return void
 	 */
     public function action(){
+		KodUser::checkRoot();
 		$tab = Input::get('tab', 'in', null, array('evnt','type','logs'));
 		$api = $this->loadLib($tab);
 		if (!$api) {show_json(LNG('common.illegalRequest'), false);}
@@ -136,6 +139,7 @@ class msgWarningPlugin extends PluginBase{
 	 * @return void
 	 */
 	public function taskInfo(){
+		KodUser::checkRoot();
 		$info = Model('SystemTask')->findByKey('event', $this->pluginName.'Plugin.autoTask');
 		show_json($info);
 	}

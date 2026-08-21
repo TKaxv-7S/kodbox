@@ -586,7 +586,7 @@ class batchImport {
 
             $dir = dirname($rel);
             $dir = ($dir === '.' || $dir === '') ? '' : $dir;
-            $parentID = _get($this->folderMap,$dir,null);
+            $parentID = $dir ? _get($this->folderMap,$dir,null) : '';   // _get($arr,$key)，$key为空时返回整个数组
             // 如果父目录不存在，可能是没有显式的文件夹记录，尝试使用根目录
             if (!$parentID) {
                 $parentID = $this->folderMap[''];
@@ -1165,7 +1165,7 @@ class batchImport {
             if (strpos($s['fileID'], 'PENDING:') === 0) {
                 $idx = intval(substr($s['fileID'], 8));
                 $path = $ioFileInsert[$idx]['path'];
-                $s['fileID'] = _get($pathToNewId,$path,0);
+                $s['fileID'] = $path ? _get($pathToNewId,$path,0) : 0;
             }
         }
     }
@@ -1177,7 +1177,7 @@ class batchImport {
         foreach ($forceFileID as &$fid) {
             if (is_string($fid) && strpos($fid, 'PENDING_REPLACE:') === 0) {
                 $path = substr($fid, 16);
-                $fid = _get($pathToNewId,$path,0);
+                $fid = $path ? _get($pathToNewId,$path,0) : 0;
             }
         }
     }

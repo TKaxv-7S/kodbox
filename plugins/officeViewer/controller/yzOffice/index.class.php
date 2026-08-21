@@ -93,7 +93,7 @@ class officeViewerYzOfficeIndex extends Controller {
 		$data = json_decode($res['data'], true);
 
         // 没有错误(字符串decode结果为null)，且set-cookie不为空（正常为viewpath=xxx，过期的为空），直接输出；否则删除缓存重新加载
-        if(!$data && (!empty($res['header']['Set-Cookie']) || !empty($res['header']['set-cookie']))) {
+        if(!$data && !empty($res['header']['set-cookie'])) {
             // header('Location:' . $link);
         } else {
             $app->clearCache();

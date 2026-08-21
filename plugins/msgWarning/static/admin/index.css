@@ -314,10 +314,3 @@ span.select2-container .select2-results__option .ntc-lvl {
     color: #444;
     font-weight: 600;
 }
-
-/* TODO 临时隐藏，待飞书发布后恢复 */
-.dialog-form.ntc-evnt-set-dg .form-row.item-ntcMethod [data-value=feishu],
-.dialog-form.ntc-evnt-set-dg .form-box .tab-content.eg .item-egType [data-value=feishu], 
-.admin-page .sys-notice-page .ntc-type-page .list-table .row-content:last-child {
-    display: none;
-}

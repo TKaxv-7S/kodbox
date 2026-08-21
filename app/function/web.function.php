@@ -282,21 +282,25 @@ function parse_headers($raw_headers){
 	foreach (explode("\n", $raw_headers) as $h) {
 		$h = explode(':', $h, 2);
 		if (isset($h[1])) {
-			if ( ! isset($headers[$h[0]])) {
-				$headers[$h[0]] = trim($h[1]);
-			} elseif (is_array($headers[$h[0]])) {
-				$headers[$h[0]] = array_merge($headers[$h[0]], array(trim($h[1])) );
+			$k = trim($h[0]);
+			$v = trim($h[1]);
+			if ( ! isset($headers[$k])) {
+				$headers[$k] = $v;
+			} elseif (is_array($headers[$k])) {
+				$headers[$k] = array_merge($headers[$k], array($v) );
 			} else {
-				$headers[$h[0]] = array_merge(array($headers[$h[0]]), array(trim($h[1])) );
+				$headers[$k] = array_merge(array($headers[$k]), array($v) );
 			}
-			$key = $h[0];
+			
+			$k1 = strtolower($k);
+			if($k != $k1){$headers[$k1] = $headers[$k];}
+			$key = $k;
 		} else {
 			if (substr($h[0], 0, 1) === "\t") {
 				$headers[$key] .= "\r\n\t" . trim($h[0]);
 			} elseif ( ! $key) {
 				$headers[0] = trim($h[0]);
 			}
-			trim($h[0]);
 		}
 	}
 	return $headers;
